@@ -1,42 +1,127 @@
-const appContainer=document.getElementById('app-container');
-const controlCenter=document.getElementById('control-center');
-const controlToggle=document.getElementById('control-toggle');
-const themeToggle=document.getElementById('theme-toggle');
-let dark=false;
+const audio=document.getElementById('audio');
+const playlistEl=document.getElementById('playlist');
+const titleEl=document.getElementById('track-title');
+const playBtn=document.getElementById('play');
+const nextBtn=document.getElementById('next');
+const prevBtn=document.getElementById('prev');
+const seek=document.getElementById('seek');
+const elapsed=document.getElementById('elapsed');
+const duration=document.getElementById('duration');
+const volume=document.getElementById('volume');
+const loopBtn=document.getElementById('loop');
+const shuffleBtn=document.getElementById('shuffle');
 
-// ouverture/fermeture du centre de contrôle
-controlToggle.addEventListener('click',()=>{
-  controlCenter.classList.toggle('open');
-});
-controlCenter.querySelector('.close').addEventListener('click',()=>{
-  controlCenter.classList.remove('open');
-});
+// Liste des fichiers MP3.
+// Si vous avez accès au serveur, générez ce tableau en scannant le dossier
+// 'Musique' (ex. via fs.readdir) puis envoyez le résultat au client.
+const tracks=[
+  'Musique/Dj Hamida - Paname ft. Camro.mp3',
+  'Musique/Silhouettes (Original Mix).mp3',
+  'Musique/[SPOTIFY-DOWNLOADER.COM] Disco Maghreb.mp3',
+  'Musique/[SPOTIFY-DOWNLOADER.COM] Kalimba.mp3',
+  'Musique/[SPOTIFY-DOWNLOADER.COM] Proxy.mp3'
+];
 
-document.querySelectorAll('.app-icon[data-app]').forEach(btn=>{
-  btn.addEventListener('click',()=>openApp(btn.dataset.app));
-});
+let current=0;
+let playing=false;
 
-// boutons à bascule
-controlCenter.querySelectorAll('.toggle').forEach(btn=>{
-  btn.addEventListener('click',()=>btn.classList.toggle('active'));
-});
-
-// sliders affichant la valeur
-controlCenter.querySelectorAll('.sliders input[type="range"]').forEach(slider=>{
-  const output=slider.nextElementSibling;
-  output.textContent=slider.value;
-  slider.addEventListener('input',()=>output.textContent=slider.value);
-});
-
-function openApp(name){
-  const tpl=document.getElementById(`${name}-app`);
-  if(!tpl)return;
-  const clone=tpl.content.firstElementChild.cloneNode(true);
-  clone.querySelector('.close').onclick=()=>clone.remove();
-  appContainer.appendChild(clone);
+function cleanTitle(path){
+  let name=path.split('/').pop();
+  name=name.replace(/\.[^/.]+$/, '');
+  name=name.replace(/\[[^\]]*\]/g, '');
+  return name.trim();
 }
 
-themeToggle.addEventListener('click',()=>{
-  dark=!dark;
-  document.body.classList.toggle('dark',dark);
+function loadPlaylist(){
+  playlistEl.innerHTML='';
+  tracks.forEach((t,i)=>{
+    const li=document.createElement('li');
+    li.textContent=cleanTitle(t);
+    li.onclick=()=>{current=i; playTrack();};
+    playlistEl.appendChild(li);
+  });
+  updateActive();
+}
+
+function updateActive(){
+  playlistEl.querySelectorAll('li').forEach((li,i)=>{
+    li.classList.toggle('active',i===current);
+  });
+}
+
+function playTrack(){
+  audio.src=tracks[current];
+  audio.play();
+}
+
+playBtn.onclick=()=>{
+  if(playing){
+    audio.pause();
+  }else{
+    if(!audio.src) playTrack(); else audio.play();
+  }
+};
+nextBtn.onclick=()=>next();
+prevBtn.onclick=()=>prev();
+
+function next(){
+  if(shuffleBtn.classList.contains('active')){
+    current=Math.floor(Math.random()*tracks.length);
+  }else{
+    current=(current+1)%tracks.length;
+  }
+  playTrack();
+}
+function prev(){
+  if(shuffleBtn.classList.contains('active')){
+    current=Math.floor(Math.random()*tracks.length);
+  }else{
+    current=(current-1+tracks.length)%tracks.length;
+  }
+  playTrack();
+}
+
+loopBtn.onclick=()=>{
+  loopBtn.classList.toggle('active');
+  audio.loop=loopBtn.classList.contains('active');
+};
+shuffleBtn.onclick=()=>shuffleBtn.classList.toggle('active');
+
+volume.oninput=()=>{audio.volume=volume.value;};
+seek.oninput=()=>{audio.currentTime=seek.value;};
+
+audio.addEventListener('timeupdate',()=>{
+  seek.value=audio.currentTime;
+  elapsed.textContent=formatTime(audio.currentTime);
 });
+
+audio.addEventListener('durationchange',()=>{
+  seek.max=audio.duration;
+  duration.textContent=formatTime(audio.duration);
+});
+
+audio.addEventListener('play',()=>{
+  document.querySelector('.player').classList.add('playing');
+  playBtn.textContent='❚❚';
+  playing=true;
+  titleEl.textContent=cleanTitle(tracks[current]);
+  updateActive();
+});
+
+audio.addEventListener('pause',()=>{
+  document.querySelector('.player').classList.remove('playing');
+  playBtn.textContent='▶️';
+  playing=false;
+});
+
+audio.addEventListener('ended',()=>{next();});
+
+function formatTime(s){
+  if(isNaN(s)) return '0:00';
+  const m=Math.floor(s/60);
+  const sec=Math.floor(s%60).toString().padStart(2,'0');
+  return `${m}:${sec}`;
+}
+
+loadPlaylist();
+volume.dispatchEvent(new Event('input'));
