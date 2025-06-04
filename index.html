@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maghreb Player</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- librairie pour lire les tags ID3 et récupérer la jaquette -->
+    <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.5/dist/jsmediatags.min.js"></script>
 </head>
 <body>
     <div id="wallpaper"></div>
     <div class="player">
-        <div class="cover"></div>
+        <div class="cover">
+            <img id="cover-img" alt="album cover" />
+        </div>
         <h1 id="track-title">--</h1>
         <ul id="playlist"></ul>
         <div class="time">

@@ -10,6 +10,9 @@ const duration=document.getElementById('duration');
 const volume=document.getElementById('volume');
 const loopBtn=document.getElementById('loop');
 const shuffleBtn=document.getElementById('shuffle');
+const coverImg=document.getElementById('cover-img');
+const coverBox=document.querySelector('.cover');
+const covers={}; // cache des jaquettes
 
 // Liste des fichiers MP3.
 // Si vous avez accès au serveur, générez ce tableau en scannant le dossier
@@ -52,6 +55,7 @@ function updateActive(){
 function playTrack(){
   audio.src=tracks[current];
   audio.play();
+  updateCover();
 }
 
 playBtn.onclick=()=>{
@@ -79,6 +83,39 @@ function prev(){
     current=(current-1+tracks.length)%tracks.length;
   }
   playTrack();
+}
+
+function updateCover(){
+  const track=tracks[current];
+  if(track in covers){
+    setCover(covers[track]);
+    return;
+  }
+  jsmediatags.read(track,{
+    onSuccess:tag=>{
+      const pic=tag.tags.picture;
+      if(pic){
+        let str='';
+        for(const b of pic.data){str+=String.fromCharCode(b);} 
+        const img=`data:${pic.format};base64,${btoa(str)}`;
+        covers[track]=img;
+        setCover(img);
+      }else{covers[track]=null; setCover(null);}
+    },
+    onError:()=>{covers[track]=null; setCover(null);}
+  });
+}
+
+function setCover(src){
+  if(src){
+    coverImg.src=src;
+    coverImg.style.display='block';
+    coverBox.classList.remove('placeholder');
+  }else{
+    coverImg.removeAttribute('src');
+    coverImg.style.display='none';
+    coverBox.classList.add('placeholder');
+  }
 }
 
 loopBtn.onclick=()=>{

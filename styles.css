@@ -26,11 +26,14 @@ body.dark{background:var(--bg-dark); color:var(--text-dark);}
 body.dark .player{background:var(--glass-dark);}
 
 .cover{
-  width:150px; height:150px; margin:0 auto 1rem; border-radius:50%;
-  background:var(--accent); position:relative;
+  width:150px; height:150px; margin:0 auto 1rem; border-radius:15px;
+  background:var(--accent); overflow:hidden; position:relative;
+  display:flex; justify-content:center; align-items:center;
 }
-.player.playing .cover{animation:spin 6s linear infinite;}
-@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+.cover img{width:100%; height:100%; object-fit:cover; display:none;}
+.cover.placeholder::before{content:"\1F3B5"; font-size:3rem; color:#fff;}
+.player.playing .cover img{animation:pulse 2.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
 
 #playlist{list-style:none; padding:0; margin:0 0 1rem; max-height:200px; overflow-y:auto;}
 #playlist li{padding:.4rem .6rem; border-radius:12px; cursor:pointer;}
@@ -45,3 +48,4 @@ button.active{color:var(--accent);}
 
 input[type=range]{width:100%; margin:.3rem 0;}
 .time{display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:.2rem;}
+
