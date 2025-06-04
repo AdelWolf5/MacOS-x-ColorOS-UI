@@ -1,70 +1,47 @@
-/* Global styles with light/dark variables */
+/* Style moderne glassmorphism inspiré MacOS/ColorOS */
 :root{
   --bg-light: linear-gradient(135deg,#f6d365,#fda085);
   --bg-dark: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  --glass-bg: rgba(255,255,255,0.3);
-  --glass-dark: rgba(0,0,0,0.4);
+  --glass-light: rgba(255,255,255,0.35);
+  --glass-dark: rgba(0,0,0,0.35);
   --text-light:#222;
   --text-dark:#f5f5f5;
+  --accent:#0a84ff;
 }
+
 body{
-  margin:0; font-family:sans-serif; color:var(--text-light);
+  margin:0; font-family:sans-serif; min-height:100vh;
+  display:flex; justify-content:center; align-items:center;
+  background:var(--bg-light); color:var(--text-light);
 }
-body.dark{
-  color:var(--text-dark);
+body.dark{background:var(--bg-dark); color:var(--text-dark);}
+
+#wallpaper{position:fixed; inset:0; z-index:-1; background:inherit;}
+
+.player{
+  width:90%; max-width:400px; padding:1rem; border-radius:25px;
+  background:var(--glass-light); backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:0 8px 20px rgba(0,0,0,0.25); text-align:center;
 }
-#wallpaper{
-  position:fixed; inset:0; background:var(--bg-light); z-index:-1;
+body.dark .player{background:var(--glass-dark);}
+
+.cover{
+  width:150px; height:150px; margin:0 auto 1rem; border-radius:50%;
+  background:var(--accent); position:relative;
 }
-body.dark #wallpaper{background:var(--bg-dark);} 
-#dock{
-  position:fixed; bottom:1rem; left:50%; transform:translateX(-50%);
-  display:flex; gap:1rem; padding:0.5rem 1rem;
-  background:var(--glass-bg); backdrop-filter:blur(10px); border-radius:20px;
+.player.playing .cover{animation:spin 6s linear infinite;}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+
+#playlist{list-style:none; padding:0; margin:0 0 1rem; max-height:200px; overflow-y:auto;}
+#playlist li{padding:.4rem .6rem; border-radius:12px; cursor:pointer;}
+#playlist li.active{background:var(--accent); color:#fff;}
+
+.controls button, .extras button{
+  border:none; background:none; color:inherit; font-size:1.4rem; cursor:pointer;
+  margin:0 .3rem;
 }
-body.dark #dock{background:var(--glass-dark);} 
-.app-icon{
-  width:3rem; height:3rem; border:none; border-radius:50%;
-  font-size:1.5rem; display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); cursor:pointer;
-}
-body.dark .app-icon{background:rgba(0,0,0,0.6);} 
-#control-center{
-  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9);
-  background:var(--glass-bg); backdrop-filter:blur(16px) saturate(150%);
-  padding:1rem; border-radius:20px; box-shadow:0 8px 20px rgba(0,0,0,0.25);
-  width:90%; max-width:420px; opacity:0; visibility:hidden;
-  transition:opacity .3s, transform .3s;
-}
-body.dark #control-center{background:var(--glass-dark);}
-#control-center.open{opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1);}
-.hidden{display:none;}
-.toggles{display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem;}
-.toggle{
-  background:rgba(255,255,255,0.5); border:none; border-radius:12px;
-  padding:.5rem 1rem; cursor:pointer; transition:background .3s;
-}
-body.dark .toggle{background:rgba(0,0,0,0.5);}
-.toggle.active{background:#0a84ff; color:#fff;}
-.sliders label{display:flex; align-items:center; margin-bottom:.5rem;}
-.sliders input[type=range]{flex:1; margin:0 .5rem;}
-.value{width:2.5rem; text-align:right; font-size:.9rem;}
-#control-center header{
-  display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;
-}
-#theme-toggle{margin-top:1rem;}
-.app-window{
-  position:absolute; top:20%; left:50%; transform:translateX(-50%);
-  width:80%; max-width:400px; background:var(--glass-bg); backdrop-filter:blur(15px);
-  border-radius:25px; box-shadow:0 8px 20px rgba(0,0,0,0.2); overflow:hidden;
-  animation:float-in 0.4s ease;
-}
-body.dark .app-window{background:var(--glass-dark);} 
-.app-window header{
-  display:flex; justify-content:space-between; padding:0.5rem 1rem; align-items:center;
-}
-.close{background:none; border:none; font-size:1.2rem; cursor:pointer;}
-@keyframes float-in{from{opacity:0; transform:translate(-50%,20px);} to{opacity:1; transform:translate(-50%,0);}}
-@media(min-width:600px){
-  #dock{bottom:2rem;}
-}
+.extras{margin-top:.5rem;}
+button.active{color:var(--accent);}
+
+input[type=range]{width:100%; margin:.3rem 0;}
+.time{display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:.2rem;}

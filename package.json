@@ -1,0 +1,26 @@
+{
+  // Nom du projet et version
+  "name": "macos-x-coloros-ui",
+  "version": "1.0.0",
+
+  // Brève description
+  "description": "Interface web hybride inspirée de MacOS et ColorOS, avec dock, fenêtres flottantes et lecteur de musique",
+
+  // Fichier d'entrée
+  "main": "index.html",
+
+  // Auteur et licence
+  "author": "AdelWolf5",
+  "license": "MIT",
+
+  // Dépendances de développement
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+
+  // Scripts pour le développement
+  "scripts": {
+    "start": "live-server",
+    "test": "echo \"No tests specified\""
+  }
+}
