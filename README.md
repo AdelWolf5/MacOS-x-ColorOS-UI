@@ -1,2 +1,1 @@
-# MacOS-x-ColorOS-UI
-Interface web hybride inspirée par MacOS et Oppo ColorOS : Dock, Centre de Contrôle, fenêtres flottantes, animations modernes. Design responsive et glassmorphism.
+Fusionne le meilleur de MacOS et ColorOS dans une UI web interactive. Dock style MacOS, Centre de Contrôle à la ColorOS, fenêtres arrondies effet glass, animations fluides et thème responsive. Idéal pour fans d’UI modernes et expérimentations créatives !
