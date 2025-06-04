@@ -10,29 +10,59 @@
 </head>
 <body>
     <div id="wallpaper"></div>
-    <div class="player">
-        <div class="cover">
-            <img id="cover-img" alt="album cover" />
+
+    <div id="dock">
+        <button class="dock-item" data-target="music-window">🎵</button>
+        <button class="dock-item" data-target="photos-window">📷</button>
+        <button class="dock-item" data-target="notes-window">📝</button>
+        <button class="dock-item" data-target="settings-window">⚙️</button>
+    </div>
+
+    <div class="window" id="music-window">
+        <button class="close">✖</button>
+        <div class="player">
+            <div class="cover placeholder">
+                <img id="cover-img" alt="album cover" />
+            </div>
+            <h1 id="track-title">--</h1>
+            <ul id="playlist"></ul>
+            <div class="time">
+                <span id="elapsed">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            <input type="range" id="seek" value="0" min="0" step="0.01">
+            <div class="controls">
+                <button id="prev">⏮</button>
+                <button id="play">▶️</button>
+                <button id="next">⏭</button>
+            </div>
+            <div class="extras">
+                <button id="shuffle">🔀</button>
+                <button id="loop">🔁</button>
+            </div>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
         </div>
-        <h1 id="track-title">--</h1>
-        <ul id="playlist"></ul>
-        <div class="time">
-            <span id="elapsed">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-        <input type="range" id="seek" value="0" min="0" step="0.01">
-        <div class="controls">
-            <button id="prev">⏮</button>
-            <button id="play">▶️</button>
-            <button id="next">⏭</button>
-        </div>
-        <div class="extras">
-            <button id="shuffle">🔀</button>
-            <button id="loop">🔁</button>
-        </div>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
     </div>
     <audio id="audio"></audio>
+
+    <div class="window" id="photos-window">
+        <button class="close">✖</button>
+        <div class="gallery">
+            <img src="https://source.unsplash.com/random/300x200?nature" alt="" />
+            <img src="https://source.unsplash.com/random/301x200?city" alt="" />
+            <img src="https://source.unsplash.com/random/302x200?sea" alt="" />
+        </div>
+    </div>
+
+    <div class="window" id="notes-window">
+        <button class="close">✖</button>
+        <textarea id="note-area" placeholder="Vos notes..."></textarea>
+    </div>
+
+    <div class="window" id="settings-window">
+        <button class="close">✖</button>
+        <button id="theme-toggle">Thème</button>
+    </div>
 
     <script src="app.js"></script>
 </body>
