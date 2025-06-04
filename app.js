@@ -1,6 +1,24 @@
 // gestion des fenêtres
 const dockButtons=document.querySelectorAll('.dock-item');
 const windows=document.querySelectorAll('.window');
+const oppoWindow=document.getElementById('oppo-window');
+const oppoContent=document.getElementById('oppo-content');
+
+function detectDevice(){
+  const w=window.innerWidth, h=window.innerHeight, ua=navigator.userAgent;
+  if(w<=600||/Mobile|Android|iPhone/i.test(ua)) return 'phone';
+  if(w<=1024||/iPad|Tablet/i.test(ua)||(h>w&&navigator.maxTouchPoints>1)) return 'tablet';
+  return 'computer';
+}
+
+function updateOppoContent(){
+  const type=detectDevice();
+  let emoji,name,os;
+  if(type==='phone'){emoji='📱'; name='Oppo Phone'; os='iOS';}
+  else if(type==='tablet'){emoji='📲'; name='Oppo Tablet'; os='iPadOS';}
+  else{emoji='💻'; name='Oppo Computer'; os='MacOS';}
+  oppoContent.innerHTML=`<div class="device-emoji">${emoji}</div><h1>${name}</h1><p>${os}</p>`;
+}
 dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));
 });
@@ -33,7 +51,10 @@ windows.forEach(w=>{
 
 function openWindow(el){
   windows.forEach(w=>w.classList.remove('open'));
-  if(el) el.classList.add('open');
+  if(el){
+    el.classList.add('open');
+    if(el===oppoWindow) updateOppoContent();
+  }
 }
 
 // thème clair/sombre
@@ -216,3 +237,8 @@ function formatTime(s){
 
 loadPlaylist();
 volume.dispatchEvent(new Event('input'));
+
+window.addEventListener('resize',()=>{
+  if(oppoWindow.classList.contains('open')) updateOppoContent();
+});
+updateOppoContent();

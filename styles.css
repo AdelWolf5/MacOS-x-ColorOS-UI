@@ -53,6 +53,11 @@ body.dark .window{background:var(--glass-dark);}
 .window.open{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);}
 .window .close{position:absolute; top:.5rem; right:.5rem; border:none; background:none; color:inherit; font-size:1.2rem; cursor:pointer;}
 
+#oppo-content{text-align:center;}
+#oppo-content .device-emoji{font-size:4rem; margin-bottom:.5rem;}
+#oppo-content h1{margin:.3rem 0;}
+#oppo-content p{margin:0; font-weight:bold;}
+
 .gallery{display:flex; flex-wrap:wrap; gap:.5rem;}
 .gallery img{width:calc(33% - .5rem); border-radius:10px; object-fit:cover;}
 @media(max-width:500px){.gallery img{width:100%;}}
