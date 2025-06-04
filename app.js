@@ -6,6 +6,31 @@ dockButtons.forEach(btn=>{
 });
 document.querySelectorAll('.window .close').forEach(c=>c.onclick=()=>c.parentElement.classList.remove('open'));
 
+// slide down to close for touch devices
+windows.forEach(w=>{
+  let startY=null;
+  const mobile=()=>window.innerWidth<=600;
+  w.addEventListener('touchstart',e=>{
+    if(!w.classList.contains('open')) return;
+    startY=e.touches[0].clientY;
+    w.style.transition='none';
+  });
+  w.addEventListener('touchmove',e=>{
+    if(startY===null) return;
+    const y=e.touches[0].clientY-startY;
+    if(y<0) return;
+    w.style.transform=mobile()?`translateY(${y}px)`:`translate(-50%, calc(-50% + ${y}px))`;
+  });
+  w.addEventListener('touchend',e=>{
+    if(startY===null) return;
+    const y=e.changedTouches[0].clientY-startY;
+    w.style.transition='';
+    w.style.transform='';
+    if(y>100) w.classList.remove('open');
+    startY=null;
+  });
+});
+
 function openWindow(el){
   windows.forEach(w=>w.classList.remove('open'));
   if(el) el.classList.add('open');
