@@ -1,0 +1,52 @@
+/* Global styles with light/dark variables */
+:root{
+  --bg-light: linear-gradient(135deg,#f6d365,#fda085);
+  --bg-dark: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  --glass-bg: rgba(255,255,255,0.3);
+  --glass-dark: rgba(0,0,0,0.4);
+  --text-light:#222;
+  --text-dark:#f5f5f5;
+}
+body{
+  margin:0; font-family:sans-serif; color:var(--text-light);
+}
+body.dark{
+  color:var(--text-dark);
+}
+#wallpaper{
+  position:fixed; inset:0; background:var(--bg-light); z-index:-1;
+}
+body.dark #wallpaper{background:var(--bg-dark);} 
+#dock{
+  position:fixed; bottom:1rem; left:50%; transform:translateX(-50%);
+  display:flex; gap:1rem; padding:0.5rem 1rem;
+  background:var(--glass-bg); backdrop-filter:blur(10px); border-radius:20px;
+}
+body.dark #dock{background:var(--glass-dark);} 
+.app-icon{
+  width:3rem; height:3rem; border:none; border-radius:50%;
+  font-size:1.5rem; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.6); backdrop-filter:blur(5px); cursor:pointer;
+}
+body.dark .app-icon{background:rgba(0,0,0,0.6);} 
+#control-center{
+  position:fixed; top:1rem; right:1rem; background:var(--glass-bg);
+  backdrop-filter:blur(12px); padding:1rem; border-radius:20px; box-shadow:0 8px 16px rgba(0,0,0,0.2);
+}
+body.dark #control-center{background:var(--glass-dark);} 
+.hidden{display:none;}
+.app-window{
+  position:absolute; top:20%; left:50%; transform:translateX(-50%);
+  width:80%; max-width:400px; background:var(--glass-bg); backdrop-filter:blur(15px);
+  border-radius:25px; box-shadow:0 8px 20px rgba(0,0,0,0.2); overflow:hidden;
+  animation:float-in 0.4s ease;
+}
+body.dark .app-window{background:var(--glass-dark);} 
+.app-window header{
+  display:flex; justify-content:space-between; padding:0.5rem 1rem; align-items:center;
+}
+.close{background:none; border:none; font-size:1.2rem; cursor:pointer;}
+@keyframes float-in{from{opacity:0; transform:translate(-50%,20px);} to{opacity:1; transform:translate(-50%,0);}}
+@media(min-width:600px){
+  #dock{bottom:2rem;}
+}
