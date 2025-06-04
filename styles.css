@@ -30,11 +30,29 @@ body.dark #dock{background:var(--glass-dark);}
 }
 body.dark .app-icon{background:rgba(0,0,0,0.6);} 
 #control-center{
-  position:fixed; top:1rem; right:1rem; background:var(--glass-bg);
-  backdrop-filter:blur(12px); padding:1rem; border-radius:20px; box-shadow:0 8px 16px rgba(0,0,0,0.2);
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.9);
+  background:var(--glass-bg); backdrop-filter:blur(16px) saturate(150%);
+  padding:1rem; border-radius:20px; box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  width:90%; max-width:420px; opacity:0; visibility:hidden;
+  transition:opacity .3s, transform .3s;
 }
-body.dark #control-center{background:var(--glass-dark);} 
+body.dark #control-center{background:var(--glass-dark);}
+#control-center.open{opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1);}
 .hidden{display:none;}
+.toggles{display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem;}
+.toggle{
+  background:rgba(255,255,255,0.5); border:none; border-radius:12px;
+  padding:.5rem 1rem; cursor:pointer; transition:background .3s;
+}
+body.dark .toggle{background:rgba(0,0,0,0.5);}
+.toggle.active{background:#0a84ff; color:#fff;}
+.sliders label{display:flex; align-items:center; margin-bottom:.5rem;}
+.sliders input[type=range]{flex:1; margin:0 .5rem;}
+.value{width:2.5rem; text-align:right; font-size:.9rem;}
+#control-center header{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;
+}
+#theme-toggle{margin-top:1rem;}
 .app-window{
   position:absolute; top:20%; left:50%; transform:translateX(-50%);
   width:80%; max-width:400px; background:var(--glass-bg); backdrop-filter:blur(15px);

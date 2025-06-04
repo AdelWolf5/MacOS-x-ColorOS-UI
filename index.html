@@ -10,7 +10,27 @@
     <div id="wallpaper"></div>
     <div id="app-container"></div>
 
-    <div id="control-center" class="hidden">
+    <!-- Centre de contrôle flottant -->
+    <div id="control-center">
+        <header>
+            <h2>Centre de contrôle</h2>
+            <button class="close">×</button>
+        </header>
+        <div class="toggles">
+            <button class="toggle" data-toggle="wifi">Wi‑Fi</button>
+            <button class="toggle" data-toggle="bluetooth">Bluetooth</button>
+            <button class="toggle" data-toggle="airplane">✈︎</button>
+        </div>
+        <div class="sliders">
+            <label>Luminosité
+                <input type="range" id="brightness" min="0" max="100" value="50">
+                <span class="value">50</span>
+            </label>
+            <label>Volume
+                <input type="range" id="volume" min="0" max="100" value="50">
+                <span class="value">50</span>
+            </label>
+        </div>
         <button id="theme-toggle">Thème</button>
     </div>
 
