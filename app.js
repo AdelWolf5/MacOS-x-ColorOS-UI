@@ -127,9 +127,9 @@ const alertBox=alertOverlay.querySelector('.alert-box');
 const alertOk=document.getElementById('alert-ok');
 const alertIgnore=document.getElementById('alert-ignore');
 const contacts={
-  Rodrigue:{sound:'cat-iphone-ringtone',img:'img/contacts/rodrigue.svg'},
-  Nouhaila:{sound:'notif',img:'img/contacts/nouhaila.svg'},
-  Bardella:{sound:'buzzer-error',img:'img/contacts/bardella.svg'}
+  Rodrigue:{sound:'Rodrigue',img:'img/contacts/rodrigue.svg'},
+  Nouhaila:{sound:'Nouhaila',img:'img/contacts/nouhaila.svg'},
+  Bardella:{sound:'Bardella',img:'img/contacts/bardella.svg'}
 };
 let callTimer;
 
