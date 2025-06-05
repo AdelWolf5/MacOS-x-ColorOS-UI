@@ -121,6 +121,7 @@ const callPhoto=document.getElementById('call-photo');
 const callTitle=document.getElementById('call-title');
 const answerBtn=document.getElementById('call-answer');
 const declineBtn=document.getElementById('call-decline');
+const ignoreBtn=document.getElementById('call-ignore');
 const alertOverlay=document.getElementById('alert-overlay');
 const alertBox=alertOverlay.querySelector('.alert-box');
 const alertOk=document.getElementById('alert-ok');
@@ -161,6 +162,10 @@ function openPhoneApp(){
 
 answerBtn.addEventListener('click',closeCall);
 declineBtn.addEventListener('click',closeCall);
+ignoreBtn&&ignoreBtn.addEventListener('click',()=>{
+  document.querySelector('.call-overlay').classList.remove('active');
+  playSound('error');
+});
 
 let alertTimer;
 function launchAlert(){
