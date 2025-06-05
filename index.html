@@ -18,6 +18,7 @@
         <button class="dock-item" data-target="settings-window">⚙️</button>
         <button class="dock-item" onclick="openPhoneApp()" title="Téléphone"><img src="img/phone.svg" alt="Téléphone"></button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
+        <button id="alert-btn" class="dock-item" title="Alerte">❌</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
     </div>
 
@@ -135,6 +136,18 @@
             <div class="actions">
                 <button id="call-answer" class="answer">Répondre</button>
                 <button id="call-decline" class="decline">Refuser</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-overlay" class="alert-overlay">
+        <div class="alert-box">
+            <span class="alert-icon">❌</span>
+            <p class="alert-title">Ne pas voter pour Bardella</p>
+            <p class="alert-sub">Ce choix est dangereux pour l'égalité et les libertés.</p>
+            <div class="alert-actions">
+                <button id="alert-ok" class="ok">✅ Compris</button>
+                <button id="alert-ignore" class="ignore">🗑️ Ignorer</button>
             </div>
         </div>
     </div>
