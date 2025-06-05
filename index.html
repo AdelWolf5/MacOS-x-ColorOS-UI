@@ -16,6 +16,7 @@
         <button class="dock-item" data-target="photos-window">📷</button>
         <button class="dock-item" data-target="notes-window">📝</button>
         <button class="dock-item" data-target="settings-window">⚙️</button>
+        <button id="rodrigue-call" class="dock-item" title="📞 Rodrigue Appelle">📞</button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
     </div>
@@ -104,6 +105,17 @@
                 <button class="carousel-btn prev">◀</button>
                 <button class="carousel-btn next">▶</button>
             </div>
+        </div>
+    </div>
+
+    <div id="call-overlay" class="call-overlay">
+        <div class="call-card ringing">
+            <p id="call-title">Rodrigue Appelle...</p>
+            <div class="actions">
+                <button id="call-answer" class="answer">Répondre</button>
+                <button id="call-decline" class="decline">Refuser</button>
+            </div>
+            <p id="call-message" class="call-message"></p>
         </div>
     </div>
 

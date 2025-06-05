@@ -9,6 +9,19 @@ function playSound(name){
   audio.volume=0.8;
   audio.play();
 }
+
+let callAudio;
+function playCallSound(name){
+  if(callAudio){callAudio.pause();callAudio.currentTime=0;}
+  callAudio=new Audio(`sons/${name}.mp3`);
+  callAudio.loop=true;
+  callAudio.volume=0.8;
+  callAudio.play();
+  return callAudio;
+}
+function stopCallSound(){
+  if(callAudio){callAudio.pause();callAudio.currentTime=0;}
+}
 const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
@@ -97,6 +110,37 @@ document.querySelectorAll('#sound-test [data-sound]').forEach(btn=>{
     if(sound==='warning'){showAlert('Alerte \u26A0');}else{playSound(sound);}
   });
 });
+
+// Appel de Rodrigue
+const callBtn=document.getElementById('rodrigue-call');
+const callOverlay=document.getElementById('call-overlay');
+const callCard=callOverlay.querySelector('.call-card');
+const answerBtn=document.getElementById('call-answer');
+const declineBtn=document.getElementById('call-decline');
+const callMessage=document.getElementById('call-message');
+
+function openCall(){
+  callOverlay.classList.add('show');
+  callCard.classList.add('ringing');
+  callMessage.textContent='';
+  answerBtn.style.display='';
+  declineBtn.textContent='Refuser';
+  playCallSound('cat-iphone-ringtone');
+}
+function closeCall(){
+  stopCallSound();
+  callOverlay.classList.remove('show');
+  callCard.classList.remove('ringing');
+}
+callBtn&&callBtn.addEventListener('click',openCall);
+answerBtn.addEventListener('click',()=>{
+  stopCallSound();
+  callCard.classList.remove('ringing');
+  callMessage.textContent='Allô fréro, c\u2019est Rodrigue 😎📞';
+  answerBtn.style.display='none';
+  declineBtn.textContent='Fermer';
+});
+declineBtn.addEventListener('click',closeCall);
 
 function showAlert(msg){
   playSound('warning');
