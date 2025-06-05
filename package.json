@@ -1,0 +1,10 @@
+{
+  "name": "macos-coloros-ui",
+  "version": "1.0.0",
+  "description": "Interface web hybride macOS x ColorOS avec HTML, CSS et JavaScript.",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "author": "StarYAM",
+  "license": "MIT"
+}
