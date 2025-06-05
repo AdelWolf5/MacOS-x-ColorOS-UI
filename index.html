@@ -21,6 +21,7 @@
         <button id="alert-btn" class="dock-item" title="Alerte">❌</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
         <button class="dock-item" data-target="game-window" title="2048">🎮 2048</button>
+        <button class="dock-item" data-target="birds-window" title="Galaxy Birds">🐦</button>
     </div>
 
     <div class="window" id="music-window">
@@ -117,6 +118,15 @@
         <div class="actions">
             <button class="replay">↻ Rejouer</button>
         </div>
+    </div>
+
+    <div class="window" id="birds-window">
+        <button class="close">✖</button>
+        <div class="scorebar">
+            Score&nbsp;:<span id="birds-score">0</span>
+            <button class="replay" style="float:right">↻</button>
+        </div>
+        <canvas id="birds-canvas" width="320" height="200"></canvas>
     </div>
 
 <div class="window" id="phone-window">

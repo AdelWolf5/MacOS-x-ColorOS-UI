@@ -179,3 +179,9 @@ body.dark .phone-contact{background:var(--glass-dark);}
 @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
 #game-window .actions{margin-top:.5rem;text-align:center;}
 #game-window .actions button{border:none;border-radius:12px;padding:.4rem 1rem;background:var(--accent);color:#fff;cursor:pointer;}
+
+/* Galaxy Birds */
+#birds-window .scorebar{display:flex;justify-content:space-between;font-weight:bold;margin-bottom:.5rem;align-items:center;}
+#birds-window .replay{border:none;background:none;color:inherit;font-size:1rem;cursor:pointer;}
+#birds-canvas{width:100%;max-width:400px;aspect-ratio:1.6;background:linear-gradient(#bde,#fff);border-radius:12px;touch-action:none;display:block;margin:0 auto;}
+body.dark #birds-canvas{background:linear-gradient(#234,#000);}
