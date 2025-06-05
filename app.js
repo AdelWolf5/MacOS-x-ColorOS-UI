@@ -1,5 +1,14 @@
 // gestion des fenêtres
-const dockButtons=document.querySelectorAll('.dock-item');
+// boutons du dock (hors troll)
+const dockButtons=document.querySelectorAll('.dock-item[data-target]');
+const trollBtn=document.getElementById('troll-button');
+const trollInSettings=document.getElementById('troll-btn');
+// lecture de sons
+function playSound(name){
+  const audio=new Audio(`sons/${name}.mp3`);
+  audio.volume=0.8;
+  audio.play();
+}
 const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
@@ -28,6 +37,7 @@ function initCarousel(){
 dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));
 });
+trollBtn&&trollBtn.addEventListener('click',()=>playSound('yehaw'));
 document.querySelectorAll('.window .close').forEach(c=>c.onclick=()=>c.parentElement.classList.remove('open'));
 
 // slide down to close for touch devices
@@ -57,8 +67,9 @@ windows.forEach(w=>{
 
 function openWindow(el){
   windows.forEach(w=>w.classList.remove('open'));
-    if(el){
+  if(el){
     el.classList.add('open');
+    playSound('notif');
     if(el===oppoWindow) initCarousel();
   }
 }
@@ -69,6 +80,7 @@ if(localStorage.theme==='dark') document.body.classList.add('dark');
 themeBtn.onclick=()=>{
   document.body.classList.toggle('dark');
   localStorage.theme=document.body.classList.contains('dark')?'dark':'light';
+  playSound('success');
 };
 
 // notes
@@ -76,6 +88,19 @@ const noteArea=document.getElementById('note-area');
 if(noteArea){
   noteArea.value=localStorage.notes||'';
   noteArea.addEventListener('input',()=>localStorage.notes=noteArea.value);
+}
+
+trollInSettings&&trollInSettings.addEventListener('click',()=>playSound('yehaw'));
+document.querySelectorAll('#sound-test [data-sound]').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    const sound=e.currentTarget.dataset.sound;
+    if(sound==='warning'){showAlert('Alerte \u26A0');}else{playSound(sound);}
+  });
+});
+
+function showAlert(msg){
+  playSound('warning');
+  alert(msg);
 }
 
 // lecteur audio
@@ -224,6 +249,7 @@ audio.addEventListener('play',()=>{
   playing=true;
   titleEl.textContent=cleanTitle(tracks[current]);
   updateActive();
+  playSound('success');
 });
 
 audio.addEventListener('pause',()=>{
@@ -233,6 +259,7 @@ audio.addEventListener('pause',()=>{
 });
 
 audio.addEventListener('ended',()=>{next();});
+audio.addEventListener('error',()=>playSound('error'));
 
 function formatTime(s){
   if(isNaN(s)) return '0:00';

@@ -119,3 +119,9 @@ input[type=range]{width:100%; margin:.3rem 0;}
   .window.open{transform:translateY(0);}
 }
 
+/* tests de sons et bouton troll */
+#sound-test{margin-top:1rem;text-align:center;}
+#sound-test .sounds{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;}
+#sound-test button,#troll-btn{background:var(--glass-light);border:none;border-radius:12px;padding:.4rem .8rem;color:inherit;cursor:pointer;}
+body.dark #sound-test button,body.dark #troll-btn{background:var(--glass-dark);}
+
