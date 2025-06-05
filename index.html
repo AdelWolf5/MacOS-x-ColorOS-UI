@@ -17,9 +17,6 @@
         <button class="dock-item" data-target="notes-window">📝</button>
         <button class="dock-item" data-target="settings-window">⚙️</button>
         <button class="dock-item" onclick="openPhoneApp()" title="Téléphone"><img src="img/phone.svg" alt="Téléphone"></button>
-        <button class="dock-item" onclick="launchCall('Rodrigue')" title="Rodrigue"><img src="img/contacts/rodrigue.svg" alt="Rodrigue"></button>
-        <button class="dock-item" onclick="launchCall('Nouhaila')" title="Nouhaila"><img src="img/contacts/nouhaila.svg" alt="Nouhaila"></button>
-        <button class="dock-item" onclick="launchCall('Bardella')" title="Bardella"><img src="img/contacts/bardella.svg" alt="Bardella"></button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
         <button id="alert-btn" class="dock-item" title="Alerte">❌</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
@@ -115,20 +112,17 @@
 <div class="window" id="phone-window">
     <button class="close">✖</button>
     <div class="contacts">
-        <div class="phone-contact">
+        <div class="phone-contact" onclick="launchCall('Rodrigue')">
             <img src="img/contacts/rodrigue.svg" alt="Rodrigue">
             <span>Rodrigue</span>
-            <button onclick="launchCall('Rodrigue')">Appeler</button>
         </div>
-        <div class="phone-contact">
+        <div class="phone-contact" onclick="launchCall('Nouhaila')">
             <img src="img/contacts/nouhaila.svg" alt="Nouhaila">
             <span>Nouhaila</span>
-            <button onclick="launchCall('Nouhaila')">Appeler</button>
         </div>
-        <div class="phone-contact">
+        <div class="phone-contact" onclick="launchCall('Bardella')">
             <img src="img/contacts/bardella.svg" alt="Bardella">
             <span>Bardella</span>
-            <button onclick="launchCall('Bardella')">Appeler</button>
         </div>
     </div>
 </div>
