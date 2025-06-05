@@ -16,15 +16,7 @@
         <button class="dock-item" data-target="photos-window">📷</button>
         <button class="dock-item" data-target="notes-window">📝</button>
         <button class="dock-item" data-target="settings-window">⚙️</button>
-        <button class="dock-item call-btn" data-name="Rodrigue" data-sound="cat-iphone-ringtone" data-img="img/contacts/rodrigue.svg" title="📞 Rodrigue">
-            <img src="img/contacts/rodrigue.svg" alt="Rodrigue">
-        </button>
-        <button class="dock-item call-btn" data-name="Nouhaila" data-sound="notif" data-img="img/contacts/nouhaila.svg" title="📞 Nouhaila">
-            <img src="img/contacts/nouhaila.svg" alt="Nouhaila">
-        </button>
-        <button class="dock-item call-btn" data-name="Bardella" data-sound="buzzer-error" data-img="img/contacts/bardella.svg" title="📞 Bardella">
-            <img src="img/contacts/bardella.svg" alt="Bardella">
-        </button>
+        <button class="dock-item" onclick="openPhoneApp()" title="Téléphone"><img src="img/phone.svg" alt="Téléphone"></button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
     </div>
@@ -116,6 +108,26 @@
         </div>
     </div>
 
+<div class="window" id="phone-window">
+    <button class="close">✖</button>
+    <div class="contacts">
+        <div class="phone-contact">
+            <img src="img/contacts/rodrigue.svg" alt="Rodrigue">
+            <span>Rodrigue</span>
+            <button onclick="launchCall('Rodrigue')">Appeler</button>
+        </div>
+        <div class="phone-contact">
+            <img src="img/contacts/nouhaila.svg" alt="Nouhaila">
+            <span>Nouhaila</span>
+            <button onclick="launchCall('Nouhaila')">Appeler</button>
+        </div>
+        <div class="phone-contact">
+            <img src="img/contacts/bardella.svg" alt="Bardella">
+            <span>Bardella</span>
+            <button onclick="launchCall('Bardella')">Appeler</button>
+        </div>
+    </div>
+</div>
     <div id="call-overlay" class="call-overlay">
         <div class="call-card ringing">
             <img id="call-photo" class="call-photo" alt="contact">

@@ -139,3 +139,12 @@ body.dark .call-card{background:var(--glass-dark);}
 .actions .decline{background:#e53935;}
 .call-photo{width:80px;height:80px;border-radius:50%;margin-bottom:.5rem;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.3);}
 
+
+/* Phone app */
+#phone-window .contacts{display:flex;flex-direction:column;gap:.8rem;}
+.phone-contact{display:flex;align-items:center;justify-content:space-between;padding:.5rem;border-radius:15px;background:var(--glass-light);}
+body.dark .phone-contact{background:var(--glass-dark);}
+.phone-contact img{width:40px;height:40px;border-radius:50%;}
+.phone-contact span{flex:1;margin:0 .5rem;}
+.phone-contact button{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:.3rem .8rem;cursor:pointer;}
+.phone-contact button:hover{opacity:.9;}

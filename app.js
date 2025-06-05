@@ -25,6 +25,7 @@ function stopCallSound(){
 const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
+const phoneWindow=document.getElementById('phone-window');
 let slide=0;
 let carouselInit=false;
 function initCarousel(){
@@ -118,6 +119,11 @@ const callPhoto=document.getElementById('call-photo');
 const callTitle=document.getElementById('call-title');
 const answerBtn=document.getElementById('call-answer');
 const declineBtn=document.getElementById('call-decline');
+const contacts={
+  Rodrigue:{sound:'cat-iphone-ringtone',img:'img/contacts/rodrigue.svg'},
+  Nouhaila:{sound:'notif',img:'img/contacts/nouhaila.svg'},
+  Bardella:{sound:'buzzer-error',img:'img/contacts/bardella.svg'}
+};
 let callTimer;
 
 function openCall(name, sound, img){
@@ -137,9 +143,15 @@ function closeCall(){
   clearTimeout(callTimer);
 }
 
-document.querySelectorAll('.call-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>openCall(btn.dataset.name,btn.dataset.sound,btn.dataset.img));
-});
+function launchCall(name){
+  const c=contacts[name];
+  if(c) openCall(name,c.sound,c.img);
+}
+
+function openPhoneApp(){
+  openWindow(phoneWindow);
+}
+
 
 answerBtn.addEventListener('click',closeCall);
 declineBtn.addEventListener('click',closeCall);
