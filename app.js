@@ -118,6 +118,10 @@ const callCard=callOverlay.querySelector('.call-card');
 const answerBtn=document.getElementById('call-answer');
 const declineBtn=document.getElementById('call-decline');
 const callMessage=document.getElementById('call-message');
+// Appel de Bardella
+const bardellaBtn=document.getElementById('bardella-call');
+const bardellaOverlay=document.getElementById('bardella-overlay');
+const bardellaDecline=bardellaOverlay?.querySelector('.decline');
 
 function openCall(){
   callOverlay.classList.add('show');
@@ -141,6 +145,16 @@ answerBtn.addEventListener('click',()=>{
   declineBtn.textContent='Fermer';
 });
 declineBtn.addEventListener('click',closeCall);
+
+function openBardellaCall(){
+  bardellaOverlay.classList.add('show');
+  playSound('error');
+}
+function closeBardellaCall(){
+  bardellaOverlay.classList.remove('show');
+}
+bardellaBtn&&bardellaBtn.addEventListener('click',openBardellaCall);
+bardellaDecline&&bardellaDecline.addEventListener('click',closeBardellaCall);
 
 function showAlert(msg){
   playSound('warning');
