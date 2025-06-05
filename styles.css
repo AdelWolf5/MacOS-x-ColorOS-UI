@@ -129,11 +129,17 @@ body.dark #sound-test button,body.dark #troll-btn{background:var(--glass-dark);}
 /* Appel entrant */
 .call-overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.4);z-index:20;visibility:hidden;opacity:0;transition:opacity .3s;}
 .call-overlay.show{visibility:visible;opacity:1;}
-.call-card{background:var(--glass-light);backdrop-filter:blur(20px) saturate(160%);border-radius:20px;padding:1rem;width:90%;max-width:300px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.3);transform:scale(0.9);transition:transform .3s;}
-.call-overlay.show .call-card{transform:scale(1);}
+.call-card{background:var(--glass-light);backdrop-filter:blur(20px) saturate(160%);border-radius:20px;padding:1rem;width:90%;max-width:300px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.3);transform:translateY(30px) scale(0.9);transition:transform .3s;}
+.call-overlay.show .call-card{transform:translateY(0) scale(1);}
 body.dark .call-card{background:var(--glass-dark);}
 .call-card.ringing{animation:ring 1s linear infinite;}
-@keyframes ring{0%,100%{transform:rotate(0);}20%{transform:rotate(3deg);}40%{transform:rotate(-3deg);}60%{transform:rotate(2deg);}80%{transform:rotate(-2deg);}}
+@keyframes ring{
+  0%,100%{transform:translateY(0) scale(1) rotate(0);}
+  20%{transform:translateY(0) scale(1) rotate(3deg);}
+  40%{transform:translateY(0) scale(1) rotate(-3deg);}
+  60%{transform:translateY(0) scale(1) rotate(2deg);}
+  80%{transform:translateY(0) scale(1) rotate(-2deg);}
+}
 .actions{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;}
 .actions button{flex:1;padding:.4rem .8rem;border:none;border-radius:12px;color:#fff;cursor:pointer;}
 .actions .answer{background:var(--accent);}
