@@ -3,40 +3,27 @@ const dockButtons=document.querySelectorAll('.dock-item');
 const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
-
-// infos produit selon la taille d'\u00e9cran
-const oppoProducts={
-  phone:{
-    img:'Oppo png/oppo find x8 pro.png',
-    title:'Oppo Find X8 Pro \u2013 iOS',
-    desc:'Un smartphone haut de gamme.'
-  },
-  tablet:{
-    img:'Oppo png/Oppo pad.png',
-    title:'Oppo Pad 4 Pro \u2013 iPadOS',
-    desc:'La tablette parfaite pour le divertissement.'
-  },
-  computer:{
-    img:'Oppo png/OppoBook Pro M2.png',
-    title:'OppoBook Pro M2 \u2013 MacOS',
-    desc:'Un notebook puissant pour cr\u00e9er.'
-  }
-};
-
-function detectDevice(){
-  const w=window.innerWidth;
-  if(w<700) return 'phone';
-  if(w<1100) return 'tablet';
-  return 'computer';
-}
-
-function updateOppoContent(){
-  const type=detectDevice();
-  const {img,title,desc}=oppoProducts[type];
-  oppoContent.innerHTML=`<img src="${img}" alt="${title}" class="oppo-img"><h1>${title}</h1><button class="discover-btn">D\u00e9couvrir</button><p class="description">${desc}</p>`;
-  const p=oppoContent.querySelector('.description');
-  // affiche/masque la description
-  oppoContent.querySelector('.discover-btn').onclick=()=>p.classList.toggle('show');
+let slide=0;
+let carouselInit=false;
+function initCarousel(){
+  if(carouselInit) return;
+  carouselInit=true;
+  const track=oppoContent.querySelector('.carousel-track');
+  const slides=[...track.children];
+  const prev=oppoContent.querySelector('.carousel-btn.prev');
+  const next=oppoContent.querySelector('.carousel-btn.next');
+  const update=()=>track.style.transform=`translateX(-${slide*100}%)`;
+  prev.onclick=()=>{slide=(slide-1+slides.length)%slides.length;update();};
+  next.onclick=()=>{slide=(slide+1)%slides.length;update();};
+  let start=null;
+  track.addEventListener('touchstart',e=>start=e.touches[0].clientX);
+  track.addEventListener('touchend',e=>{
+    if(start===null) return;
+    const diff=e.changedTouches[0].clientX-start;
+    if(Math.abs(diff)>50){diff<0?next.onclick():prev.onclick();}
+    start=null;
+  });
+  update();
 }
 dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));
@@ -70,9 +57,9 @@ windows.forEach(w=>{
 
 function openWindow(el){
   windows.forEach(w=>w.classList.remove('open'));
-  if(el){
+    if(el){
     el.classList.add('open');
-    if(el===oppoWindow) updateOppoContent();
+    if(el===oppoWindow) initCarousel();
   }
 }
 
@@ -258,6 +245,6 @@ loadPlaylist();
 volume.dispatchEvent(new Event('input'));
 
 window.addEventListener('resize',()=>{
-  if(oppoWindow.classList.contains('open')) updateOppoContent();
+  if(oppoWindow.classList.contains('open')) initCarousel();
 });
-updateOppoContent();
+initCarousel();
