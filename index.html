@@ -10,11 +10,23 @@
 </head>
 <body>
     <div id="wallpaper"></div>
+    <div id="home">
+        <div class="page">
+            <div class="widget clock-widget"></div>
+            <div class="widget weather-widget">☀️ 25°C</div>
+            <div class="widget battery-widget">--%</div>
+            <div class="widget calendar-widget"></div>
+            <div class="widget game-widget">
+                <div id="mini-game" class="mini2048"></div>
+            </div>
+        </div>
+        <div class="page"></div>
+    </div>
 
     <div id="dock">
         <button class="dock-item" data-target="music-window">🎵</button>
         <button class="dock-item" data-target="photos-window">📷</button>
-        <button class="dock-item" data-target="notes-window">📝</button>
+        <button class="dock-item" data-target="messages-window">💬</button>
         <button class="dock-item" data-target="settings-window">⚙️</button>
         <button class="dock-item" onclick="openPhoneApp()" title="Téléphone"><img src="img/phone.svg" alt="Téléphone"></button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
@@ -60,9 +72,9 @@
         </div>
     </div>
 
-    <div class="window" id="notes-window">
+    <div class="window" id="messages-window">
         <button class="close">✖</button>
-        <textarea id="note-area" placeholder="Vos notes..."></textarea>
+        <textarea id="message-area" placeholder="Vos messages..."></textarea>
     </div>
 
     <div class="window" id="settings-window">
@@ -168,6 +180,8 @@
             </div>
         </div>
     </div>
+
+    <div id="multitask" class="multitask"></div>
 
     <script src="app.js"></script>
 </body>

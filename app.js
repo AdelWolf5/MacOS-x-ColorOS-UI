@@ -105,11 +105,11 @@ themeBtn.onclick=()=>{
   playSound('success');
 };
 
-// notes
-const noteArea=document.getElementById('note-area');
-if(noteArea){
-  noteArea.value=localStorage.notes||'';
-  noteArea.addEventListener('input',()=>localStorage.notes=noteArea.value);
+// messages (simple stockage local)
+const messageArea=document.getElementById('message-area');
+if(messageArea){
+  messageArea.value=localStorage.messages||'';
+  messageArea.addEventListener('input',()=>localStorage.messages=messageArea.value);
 }
 
 trollInSettings&&trollInSettings.addEventListener('click',()=>playSound('yehaw'));
@@ -617,5 +617,65 @@ if(birdsWindow){
 
   replayBtn.addEventListener('click',reset);
   window.addEventListener('resize',resize);
-  startBirdsGame=start;
+startBirdsGame=start;
+}
+
+// écran d'accueil
+const home=document.getElementById('home');
+const pages=[...home.querySelectorAll('.page')];
+let pageIndex=0;showPage(0);
+function showPage(i){pageIndex=Math.max(0,Math.min(i,pages.length-1));home.style.transform=`translateX(-${pageIndex*100}%)`;}
+let sx=null,sy=null;
+home.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;});
+home.addEventListener('touchend',e=>{
+  if(sx===null) return;const dx=e.changedTouches[0].clientX-sx;const dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){dx<0?showPage(pageIndex+1):showPage(pageIndex-1);}else if(dy<-80){openMultitask();}
+  sx=sy=null;
+});
+
+const clockEl=document.querySelector('.clock-widget');
+const batteryEl=document.querySelector('.battery-widget');
+const dateEl=document.querySelector('.calendar-widget');
+function updateClock(){const d=new Date();clockEl.textContent=d.toLocaleTimeString();dateEl.textContent=d.toLocaleDateString();}
+setInterval(updateClock,1000);updateClock();
+if(navigator.getBattery){navigator.getBattery().then(b=>{function upd(){batteryEl.textContent=Math.round(b.level*100)+'%';}b.addEventListener('levelchange',upd);upd();});}
+
+const multitask=document.getElementById('multitask');
+function openMultitask(){
+  multitask.innerHTML='';
+  windows.forEach(w=>{
+    if(w.classList.contains('open')){
+      const c=document.createElement('div');
+      c.className='card';
+      c.textContent=w.id.replace('-window','');
+      c.onclick=()=>{multitask.classList.remove('show');openWindow(w);};
+      multitask.appendChild(c);
+    }
+  });
+  multitask.classList.add('show');
+}
+multitask.addEventListener('click',e=>{if(e.target===multitask) multitask.classList.remove('show');});
+
+// mini 2048
+const mini=document.getElementById('mini-game');
+if(mini){
+  const size=4;let board;init();
+  mini.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;});
+  mini.addEventListener('touchend',handleMove);
+  document.addEventListener('keydown',e=>{if(!document.body.contains(mini))return;switch(e.key){case 'ArrowLeft':moveLeft();break;case 'ArrowRight':moveRight();break;case 'ArrowUp':moveUp();break;case 'ArrowDown':moveDown();break;}});
+
+  function init(){
+    mini.innerHTML='';
+    mini.style.position='relative';
+    for(let i=0;i<size*size;i++){const d=document.createElement('div');d.className='cell-bg';mini.appendChild(d);}board=Array.from({length:size},()=>Array(size).fill(0));add();add();render();}
+  function add(){const e=[];for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(board[r][c]===0)e.push([r,c]);if(!e.length)return;const [r,c]=e[Math.floor(Math.random()*e.length)];board[r][c]=Math.random()<0.9?2:4;}
+  function render(){mini.querySelectorAll('.tile').forEach(t=>t.remove());for(let r=0;r<size;r++)for(let c=0;c<size;c++){const v=board[r][c];if(v){const t=document.createElement('div');t.className='tile appear';t.textContent=v;t.style.transform=`translate(${c*100}%,${r*100}%)`;t.style.background=getCol(v);mini.appendChild(t);}}}
+  function getCol(v){if(v<=64)return'linear-gradient(135deg,#ff9a3e,#ff6126)';if(v<=512)return'linear-gradient(135deg,#ffd54f,#ffb300)';return'linear-gradient(135deg,#4fc3f7,#0288d1)';}
+  function moveLeft(){let m=false;for(let r=0;r<size;r++){let row=board[r].filter(v=>v);for(let i=0;i<row.length-1;i++){if(row[i]===row[i+1]){row[i]*=2;row.splice(i+1,1);}}while(row.length<size)row.push(0);if(row.some((v,i)=>v!==board[r][i])){board[r]=row;m=true;}}after(m);}
+  function moveRight(){board.forEach(r=>r.reverse());moveLeft();board.forEach(r=>r.reverse());}
+  function transpose(){board=board[0].map((_,i)=>board.map(r=>r[i]));}
+  function moveUp(){transpose();moveLeft();transpose();}
+  function moveDown(){transpose();moveRight();transpose();}
+  function after(m){if(m){add();render();}}
+  function handleMove(e){const dx=e.changedTouches[0].clientX-sx;const dy=e.changedTouches[0].clientY-sy;Math.abs(dx)>Math.abs(dy)?(dx>40?moveRight():dx<-40&&moveLeft()):(dy>40?moveDown():dy<-40&&moveUp());}
 }
