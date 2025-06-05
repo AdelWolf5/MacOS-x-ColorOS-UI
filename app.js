@@ -4,37 +4,39 @@ const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
 
-const deviceData={
-  phone:{name:'Oppo Phone',os:'iOS',desc:"Un smartphone au style iPhone."},
-  tablet:{name:'Oppo Tablet',os:'iPadOS',desc:"Une tablette façon iPad."},
-  computer:{name:'Oppo Computer',os:'MacOS',desc:"Un laptop inspir\u00e9 Macbook."}
+// infos produit selon la taille d'\u00e9cran
+const oppoProducts={
+  phone:{
+    img:'Oppo png/oppo find x8 pro.png',
+    title:'Oppo Find X8 Pro \u2013 iOS',
+    desc:'Un smartphone haut de gamme.'
+  },
+  tablet:{
+    img:'Oppo png/Oppo pad.png',
+    title:'Oppo Pad 4 Pro \u2013 iPadOS',
+    desc:'La tablette parfaite pour le divertissement.'
+  },
+  computer:{
+    img:'Oppo png/OppoBook Pro M2.png',
+    title:'OppoBook Pro M2 \u2013 MacOS',
+    desc:'Un notebook puissant pour cr\u00e9er.'
+  }
 };
 
-function deviceSVG(type){
-  switch(type){
-    case 'phone':
-      return `<svg viewBox="0 0 120 220" class="svg-device"><rect x="30" y="10" width="60" height="200" rx="12" fill="none" stroke="currentColor" stroke-width="8"/><rect x="40" y="30" width="40" height="160" fill="currentColor" opacity="0.1"/><circle cx="60" cy="190" r="6" fill="currentColor"/><text x="60" y="120" text-anchor="middle" font-size="18" fill="currentColor">OPPO</text></svg>`;
-    case 'tablet':
-      return `<svg viewBox="0 0 160 200" class="svg-device"><rect x="20" y="10" width="120" height="180" rx="14" fill="none" stroke="currentColor" stroke-width="8"/><rect x="30" y="30" width="100" height="140" fill="currentColor" opacity="0.1"/><circle cx="80" cy="185" r="5" fill="currentColor"/><text x="80" y="100" text-anchor="middle" font-size="20" fill="currentColor">OPPO</text></svg>`;
-    default:
-      return `<svg viewBox="0 0 220 160" class="svg-device"><rect x="40" y="20" width="140" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="8"/><rect x="50" y="30" width="120" height="60" fill="currentColor" opacity="0.1"/><rect x="20" y="110" width="180" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="8"/><text x="110" y="70" text-anchor="middle" font-size="20" fill="currentColor">OPPO</text></svg>`;
-  }
-}
-
 function detectDevice(){
-  const w=window.innerWidth, h=window.innerHeight, ua=navigator.userAgent;
-  if(w<=600||/Mobile|Android|iPhone/i.test(ua)) return 'phone';
-  if(w<=1024||/iPad|Tablet/i.test(ua)||(h>w&&navigator.maxTouchPoints>1)) return 'tablet';
+  const w=window.innerWidth;
+  if(w<700) return 'phone';
+  if(w<1100) return 'tablet';
   return 'computer';
 }
 
 function updateOppoContent(){
   const type=detectDevice();
-  const {name,os,desc}=deviceData[type];
-  oppoContent.innerHTML=`${deviceSVG(type)}<h1>${name} \u2013 ${os}</h1><button class="discover-btn">D\u00e9couvrir</button><p class="description">${desc}</p>`;
-  const btn=oppoContent.querySelector('.discover-btn');
+  const {img,title,desc}=oppoProducts[type];
+  oppoContent.innerHTML=`<img src="${img}" alt="${title}" class="oppo-img"><h1>${title}</h1><button class="discover-btn">D\u00e9couvrir</button><p class="description">${desc}</p>`;
   const p=oppoContent.querySelector('.description');
-  btn.addEventListener('click',()=>p.classList.toggle('show')); 
+  // affiche/masque la description
+  oppoContent.querySelector('.discover-btn').onclick=()=>p.classList.toggle('show');
 }
 dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));
