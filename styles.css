@@ -139,6 +139,20 @@ body.dark .call-card{background:var(--glass-dark);}
 .actions .decline{background:#e53935;}
 .call-photo{width:80px;height:80px;border-radius:50%;margin-bottom:.5rem;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.3);}
 
+/* Alerte système */
+.alert-overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.4);z-index:30;visibility:hidden;opacity:0;transition:opacity .3s;}
+.alert-overlay.show{visibility:visible;opacity:1;}
+.alert-box{background:var(--glass-light);backdrop-filter:blur(20px) saturate(160%);border-radius:20px;padding:1rem;width:90%;max-width:280px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.3);transform:scale(0.9);transition:transform .3s;}
+.alert-overlay.show .alert-box{transform:scale(1);}
+body.dark .alert-box{background:var(--glass-dark);}
+.alert-icon{font-size:2rem;color:#e53935;display:block;margin-bottom:.5rem;}
+.alert-actions{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;}
+.alert-actions button{flex:1;padding:.4rem .8rem;border:none;border-radius:12px;cursor:pointer;color:#fff;}
+.alert-actions .ok{background:var(--accent);}
+.alert-actions .ignore{background:#666;}
+.alert-box.shake{animation:shake .5s;}
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-3px);}40%{transform:translateX(3px);}60%{transform:translateX(-2px);}80%{transform:translateX(2px);}}
+
 
 /* Phone app */
 #phone-window .contacts{display:flex;flex-direction:column;gap:.8rem;}

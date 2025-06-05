@@ -2,6 +2,7 @@
 // boutons du dock (hors troll)
 const dockButtons=document.querySelectorAll('.dock-item[data-target]');
 const trollBtn=document.getElementById('troll-button');
+const alertBtn=document.getElementById('alert-btn');
 const trollInSettings=document.getElementById('troll-btn');
 // lecture de sons
 function playSound(name){
@@ -52,6 +53,7 @@ dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));
 });
 trollBtn&&trollBtn.addEventListener('click',()=>playSound('yehaw'));
+alertBtn&&alertBtn.addEventListener('click',launchAlert);
 document.querySelectorAll('.window .close').forEach(c=>c.onclick=()=>c.parentElement.classList.remove('open'));
 
 // slide down to close for touch devices
@@ -119,6 +121,10 @@ const callPhoto=document.getElementById('call-photo');
 const callTitle=document.getElementById('call-title');
 const answerBtn=document.getElementById('call-answer');
 const declineBtn=document.getElementById('call-decline');
+const alertOverlay=document.getElementById('alert-overlay');
+const alertBox=alertOverlay.querySelector('.alert-box');
+const alertOk=document.getElementById('alert-ok');
+const alertIgnore=document.getElementById('alert-ignore');
 const contacts={
   Rodrigue:{sound:'cat-iphone-ringtone',img:'img/contacts/rodrigue.svg'},
   Nouhaila:{sound:'notif',img:'img/contacts/nouhaila.svg'},
@@ -155,6 +161,22 @@ function openPhoneApp(){
 
 answerBtn.addEventListener('click',closeCall);
 declineBtn.addEventListener('click',closeCall);
+
+let alertTimer;
+function launchAlert(){
+  playSound('error');
+  if(navigator.vibrate) navigator.vibrate(200);
+  alertOverlay.classList.add('show');
+  alertBox.classList.add('shake');
+  clearTimeout(alertTimer);
+  alertTimer=setTimeout(closeAlert,10000);
+  setTimeout(()=>alertBox.classList.remove('shake'),500);
+}
+
+function closeAlert(){
+  alertOverlay.classList.remove('show');
+  clearTimeout(alertTimer);
+}
 
 function showAlert(msg){
   playSound('warning');
