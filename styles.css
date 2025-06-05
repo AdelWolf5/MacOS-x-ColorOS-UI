@@ -170,33 +170,12 @@ body.dark .phone-contact{background:var(--glass-dark);}
 .phone-contact button{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:.3rem .8rem;cursor:pointer;}
 .phone-contact button:hover{opacity:.9;}
 
-/* Tic Tac Toe */
-#game-window .grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:.4rem;
-  margin-top:1rem;
-}
-#game-window .cell{
-  aspect-ratio:1;
-  font-size:2rem;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--glass-light);
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  color:inherit;
-}
-body.dark #game-window .cell{background:var(--glass-dark);}
-#game-window .message{margin-top:1rem;text-align:center;font-weight:bold;}
+/* 2048 */
+#game-window .scorebar{display:flex;justify-content:space-between;font-weight:bold;margin-bottom:.5rem;}
+#game-window .board{position:relative;width:100%;max-width:320px;aspect-ratio:1;background:#111;border-radius:15px;margin:0 auto;padding:.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;}
+#game-window .cell-bg{background:#222;border-radius:10px;}
+.tile{position:absolute;width:calc(25% - .5rem);height:calc(25% - .5rem);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:bold;color:#fff;border-radius:10px;transition:transform .15s;}
+.tile.appear{animation:pop .2s;}
+@keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
 #game-window .actions{margin-top:.5rem;text-align:center;}
-#game-window .actions button{
-  border:none;
-  border-radius:12px;
-  padding:.4rem 1rem;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer;
-}
+#game-window .actions button{border:none;border-radius:12px;padding:.4rem 1rem;background:var(--accent);color:#fff;cursor:pointer;}
