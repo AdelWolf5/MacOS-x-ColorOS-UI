@@ -360,3 +360,36 @@ window.addEventListener('resize',()=>{
   if(oppoWindow.classList.contains('open')) initCarousel();
 });
 initCarousel();
+
+// Tic Tac Toe
+const gameWindow=document.getElementById('game-window');
+if(gameWindow){
+  const cells=[...gameWindow.querySelectorAll('.cell')];
+  const message=gameWindow.querySelector('.message');
+  const replay=gameWindow.querySelector('.replay');
+  const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  let board,player;
+  function reset(){
+    board=Array(9).fill(null);
+    player='❌';
+    cells.forEach(c=>c.textContent='');
+    message.textContent='';
+  }
+  function check(){
+    return wins.some(([a,b,c])=>board[a]&&board[a]===board[b]&&board[a]===board[c]);
+  }
+  cells.forEach((cell,i)=>cell.addEventListener('click',()=>{
+    if(board[i]||message.textContent) return;
+    board[i]=player;
+    cell.textContent=player;
+    if(check()){
+      message.textContent=`${player} gagne !`;
+    }else if(board.every(Boolean)){
+      message.textContent='Match nul !';
+    }else{
+      player=player==='❌'?'⭕':'❌';
+    }
+  }));
+  replay.addEventListener('click',reset);
+  reset();
+}

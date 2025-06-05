@@ -169,3 +169,34 @@ body.dark .phone-contact{background:var(--glass-dark);}
 .phone-contact span{flex:1;margin:0 .5rem;}
 .phone-contact button{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:.3rem .8rem;cursor:pointer;}
 .phone-contact button:hover{opacity:.9;}
+
+/* Tic Tac Toe */
+#game-window .grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.4rem;
+  margin-top:1rem;
+}
+#game-window .cell{
+  aspect-ratio:1;
+  font-size:2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--glass-light);
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  color:inherit;
+}
+body.dark #game-window .cell{background:var(--glass-dark);}
+#game-window .message{margin-top:1rem;text-align:center;font-weight:bold;}
+#game-window .actions{margin-top:.5rem;text-align:center;}
+#game-window .actions button{
+  border:none;
+  border-radius:12px;
+  padding:.4rem 1rem;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
