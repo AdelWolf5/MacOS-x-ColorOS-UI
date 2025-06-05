@@ -27,6 +27,8 @@ const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
 const phoneWindow=document.getElementById('phone-window');
+const gameWindow=document.getElementById('game-window');
+let startGame2048;
 let slide=0;
 let carouselInit=false;
 function initCarousel(){
@@ -87,6 +89,7 @@ function openWindow(el){
     el.classList.add('open');
     playSound('notif');
     if(el===oppoWindow) initCarousel();
+    if(el===gameWindow && typeof startGame2048==='function') startGame2048();
   }
 }
 
@@ -361,35 +364,142 @@ window.addEventListener('resize',()=>{
 });
 initCarousel();
 
-// Tic Tac Toe
-const gameWindow=document.getElementById('game-window');
+// 2048
 if(gameWindow){
-  const cells=[...gameWindow.querySelectorAll('.cell')];
-  const message=gameWindow.querySelector('.message');
+  const boardEl=gameWindow.querySelector('#board');
+  const scoreEl=gameWindow.querySelector('#game-score');
   const replay=gameWindow.querySelector('.replay');
-  const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-  let board,player;
-  function reset(){
-    board=Array(9).fill(null);
-    player='❌';
-    cells.forEach(c=>c.textContent='');
-    message.textContent='';
-  }
-  function check(){
-    return wins.some(([a,b,c])=>board[a]&&board[a]===board[b]&&board[a]===board[c]);
-  }
-  cells.forEach((cell,i)=>cell.addEventListener('click',()=>{
-    if(board[i]||message.textContent) return;
-    board[i]=player;
-    cell.textContent=player;
-    if(check()){
-      message.textContent=`${player} gagne !`;
-    }else if(board.every(Boolean)){
-      message.textContent='Match nul !';
-    }else{
-      player=player==='❌'?'⭕':'❌';
+  const size=4;
+  let board,score;
+
+  function init(){
+    boardEl.innerHTML='';
+    for(let i=0;i<size*size;i++){
+      const c=document.createElement('div');
+      c.className='cell-bg';
+      boardEl.appendChild(c);
     }
-  }));
-  replay.addEventListener('click',reset);
-  reset();
+    board=Array.from({length:size},()=>Array(size).fill(0));
+    score=0;
+    addTile();addTile();
+    update();
+  }
+
+  function addTile(){
+    const empty=[];
+    for(let r=0;r<size;r++)for(let c=0;c<size;c++)
+      if(board[r][c]===0) empty.push([r,c]);
+    if(!empty.length) return;
+    const [r,c]=empty[Math.floor(Math.random()*empty.length)];
+    board[r][c]=Math.random()<0.9?2:4;
+  }
+
+  function update(){
+    scoreEl.textContent=score;
+    boardEl.querySelectorAll('.tile').forEach(t=>t.remove());
+    for(let r=0;r<size;r++){
+      for(let c=0;c<size;c++){
+        const v=board[r][c];
+        if(v){
+          const t=document.createElement('div');
+          t.className='tile appear';
+          t.textContent=v;
+          t.style.transform=`translate(${c*100}%,${r*100}%)`;
+          t.style.background=getColor(v);
+          boardEl.appendChild(t);
+        }
+      }
+    }
+  }
+
+  function getColor(v){
+    if(v<=64) return 'linear-gradient(135deg,#ff9a3e,#ff6126)';
+    if(v<=512) return 'linear-gradient(135deg,#ffd54f,#ffb300)';
+    return 'linear-gradient(135deg,#4fc3f7,#0288d1)';
+  }
+
+  function moveLeft(){
+    let moved=false;
+    for(let r=0;r<size;r++){
+      let row=board[r].filter(v=>v);
+      for(let i=0;i<row.length-1;i++){
+        if(row[i]===row[i+1]){
+          row[i]*=2; score+=row[i]; row.splice(i+1,1);
+        }
+      }
+      while(row.length<size) row.push(0);
+      if(row.some((v,i)=>v!==board[r][i])){board[r]=row;moved=true;}
+    }
+    afterMove(moved);
+  }
+
+  function moveRight(){
+    board.forEach(r=>r.reverse());
+    moveLeft();
+    board.forEach(r=>r.reverse());
+  }
+
+  function transpose(){
+    board=board[0].map((_,i)=>board.map(r=>r[i]));
+  }
+
+  function moveUp(){
+    transpose();
+    moveLeft();
+    transpose();
+  }
+
+  function moveDown(){
+    transpose();
+    moveRight();
+    transpose();
+  }
+
+  function afterMove(moved){
+    if(moved){
+      addTile();
+      update();
+      if(!canMove()) alert('Perdu !');
+    }
+  }
+
+  function canMove(){
+    for(let r=0;r<size;r++){
+      for(let c=0;c<size;c++){
+        if(board[r][c]===0) return true;
+        if(c<size-1 && board[r][c]===board[r][c+1]) return true;
+        if(r<size-1 && board[r][c]===board[r+1][c]) return true;
+      }
+    }
+    return false;
+  }
+
+  function handleKey(e){
+    if(!gameWindow.classList.contains('open')) return;
+    switch(e.key){
+      case 'ArrowLeft':moveLeft();break;
+      case 'ArrowRight':moveRight();break;
+      case 'ArrowUp':moveUp();break;
+      case 'ArrowDown':moveDown();break;
+      default:return;
+    }
+    e.preventDefault();
+  }
+
+  let sx,sy;
+  boardEl.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;});
+  boardEl.addEventListener('touchend',e=>{
+    const t=e.changedTouches[0];
+    const dx=t.clientX-sx; const dy=t.clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)){
+      if(dx>40) moveRight(); else if(dx<-40) moveLeft();
+    }else{
+      if(dy>40) moveDown(); else if(dy<-40) moveUp();
+    }
+  });
+
+  document.addEventListener('keydown',handleKey);
+  replay.addEventListener('click',init);
+  startGame2048=init;
+  init();
 }
