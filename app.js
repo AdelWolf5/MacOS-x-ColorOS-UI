@@ -111,50 +111,38 @@ document.querySelectorAll('#sound-test [data-sound]').forEach(btn=>{
   });
 });
 
-// Appel de Rodrigue
-const callBtn=document.getElementById('rodrigue-call');
+// Appels entrants
 const callOverlay=document.getElementById('call-overlay');
 const callCard=callOverlay.querySelector('.call-card');
+const callPhoto=document.getElementById('call-photo');
+const callTitle=document.getElementById('call-title');
 const answerBtn=document.getElementById('call-answer');
 const declineBtn=document.getElementById('call-decline');
-const callMessage=document.getElementById('call-message');
-// Appel de Bardella
-const bardellaBtn=document.getElementById('bardella-call');
-const bardellaOverlay=document.getElementById('bardella-overlay');
-const bardellaDecline=bardellaOverlay?.querySelector('.decline');
+let callTimer;
 
-function openCall(){
+function openCall(name, sound, img){
+  callTitle.textContent=`${name} Appelle…`;
+  callPhoto.src=img;
   callOverlay.classList.add('show');
   callCard.classList.add('ringing');
-  callMessage.textContent='';
-  answerBtn.style.display='';
-  declineBtn.textContent='Refuser';
-  playCallSound('cat-iphone-ringtone');
+  playCallSound(sound);
+  clearTimeout(callTimer);
+  callTimer=setTimeout(closeCall,5000);
 }
+
 function closeCall(){
   stopCallSound();
   callOverlay.classList.remove('show');
   callCard.classList.remove('ringing');
+  clearTimeout(callTimer);
 }
-callBtn&&callBtn.addEventListener('click',openCall);
-answerBtn.addEventListener('click',()=>{
-  stopCallSound();
-  callCard.classList.remove('ringing');
-  callMessage.textContent='Allô fréro, c\u2019est Rodrigue 😎📞';
-  answerBtn.style.display='none';
-  declineBtn.textContent='Fermer';
-});
-declineBtn.addEventListener('click',closeCall);
 
-function openBardellaCall(){
-  bardellaOverlay.classList.add('show');
-  playSound('error');
-}
-function closeBardellaCall(){
-  bardellaOverlay.classList.remove('show');
-}
-bardellaBtn&&bardellaBtn.addEventListener('click',openBardellaCall);
-bardellaDecline&&bardellaDecline.addEventListener('click',closeBardellaCall);
+document.querySelectorAll('.call-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>openCall(btn.dataset.name,btn.dataset.sound,btn.dataset.img));
+});
+
+answerBtn.addEventListener('click',closeCall);
+declineBtn.addEventListener('click',closeCall);
 
 function showAlert(msg){
   playSound('warning');

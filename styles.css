@@ -125,10 +125,11 @@ input[type=range]{width:100%; margin:.3rem 0;}
 #sound-test button,#troll-btn{background:var(--glass-light);border:none;border-radius:12px;padding:.4rem .8rem;color:inherit;cursor:pointer;}
 body.dark #sound-test button,body.dark #troll-btn{background:var(--glass-dark);}
 
-/* Appel de Rodrigue */
+/* Appel entrant */
 .call-overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.4);z-index:20;visibility:hidden;opacity:0;transition:opacity .3s;}
 .call-overlay.show{visibility:visible;opacity:1;}
-.call-card{background:var(--glass-light);backdrop-filter:blur(20px) saturate(160%);border-radius:20px;padding:1rem;width:90%;max-width:300px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+.call-card{background:var(--glass-light);backdrop-filter:blur(20px) saturate(160%);border-radius:20px;padding:1rem;width:90%;max-width:300px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.3);transform:scale(0.9);transition:transform .3s;}
+.call-overlay.show .call-card{transform:scale(1);}
 body.dark .call-card{background:var(--glass-dark);}
 .call-card.ringing{animation:ring 1s linear infinite;}
 @keyframes ring{0%,100%{transform:rotate(0);}20%{transform:rotate(3deg);}40%{transform:rotate(-3deg);}60%{transform:rotate(2deg);}80%{transform:rotate(-2deg);}}
@@ -136,10 +137,5 @@ body.dark .call-card{background:var(--glass-dark);}
 .actions button{flex:1;padding:.4rem .8rem;border:none;border-radius:12px;color:#fff;cursor:pointer;}
 .actions .answer{background:var(--accent);}
 .actions .decline{background:#e53935;}
-.call-message{margin-top:.5rem;}
-
-.phone-icon{margin-right:.25rem;color:#e53935;animation:icon-pulse 1s infinite;}
-@keyframes icon-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.2);}}
-.vibrate{animation:vibrate .15s linear infinite;}
-@keyframes vibrate{0%,100%{transform:translate(0);}25%{transform:translate(-2px,2px);}50%{transform:translate(2px,-2px);}75%{transform:translate(-2px,-2px);}}
+.call-photo{width:80px;height:80px;border-radius:50%;margin-bottom:.5rem;object-fit:cover;box-shadow:0 2px 6px rgba(0,0,0,0.3);}
 
