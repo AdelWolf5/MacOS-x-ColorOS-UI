@@ -4,6 +4,23 @@ const windows=document.querySelectorAll('.window');
 const oppoWindow=document.getElementById('oppo-window');
 const oppoContent=document.getElementById('oppo-content');
 
+const deviceData={
+  phone:{name:'Oppo Phone',os:'iOS',desc:"Un smartphone au style iPhone."},
+  tablet:{name:'Oppo Tablet',os:'iPadOS',desc:"Une tablette façon iPad."},
+  computer:{name:'Oppo Computer',os:'MacOS',desc:"Un laptop inspir\u00e9 Macbook."}
+};
+
+function deviceSVG(type){
+  switch(type){
+    case 'phone':
+      return `<svg viewBox="0 0 120 220" class="svg-device"><rect x="30" y="10" width="60" height="200" rx="12" fill="none" stroke="currentColor" stroke-width="8"/><rect x="40" y="30" width="40" height="160" fill="currentColor" opacity="0.1"/><circle cx="60" cy="190" r="6" fill="currentColor"/><text x="60" y="120" text-anchor="middle" font-size="18" fill="currentColor">OPPO</text></svg>`;
+    case 'tablet':
+      return `<svg viewBox="0 0 160 200" class="svg-device"><rect x="20" y="10" width="120" height="180" rx="14" fill="none" stroke="currentColor" stroke-width="8"/><rect x="30" y="30" width="100" height="140" fill="currentColor" opacity="0.1"/><circle cx="80" cy="185" r="5" fill="currentColor"/><text x="80" y="100" text-anchor="middle" font-size="20" fill="currentColor">OPPO</text></svg>`;
+    default:
+      return `<svg viewBox="0 0 220 160" class="svg-device"><rect x="40" y="20" width="140" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="8"/><rect x="50" y="30" width="120" height="60" fill="currentColor" opacity="0.1"/><rect x="20" y="110" width="180" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="8"/><text x="110" y="70" text-anchor="middle" font-size="20" fill="currentColor">OPPO</text></svg>`;
+  }
+}
+
 function detectDevice(){
   const w=window.innerWidth, h=window.innerHeight, ua=navigator.userAgent;
   if(w<=600||/Mobile|Android|iPhone/i.test(ua)) return 'phone';
@@ -13,11 +30,11 @@ function detectDevice(){
 
 function updateOppoContent(){
   const type=detectDevice();
-  let emoji,name,os;
-  if(type==='phone'){emoji='📱'; name='Oppo Phone'; os='iOS';}
-  else if(type==='tablet'){emoji='📲'; name='Oppo Tablet'; os='iPadOS';}
-  else{emoji='💻'; name='Oppo Computer'; os='MacOS';}
-  oppoContent.innerHTML=`<div class="device-emoji">${emoji}</div><h1>${name}</h1><p>${os}</p>`;
+  const {name,os,desc}=deviceData[type];
+  oppoContent.innerHTML=`${deviceSVG(type)}<h1>${name} \u2013 ${os}</h1><button class="discover-btn">D\u00e9couvrir</button><p class="description">${desc}</p>`;
+  const btn=oppoContent.querySelector('.discover-btn');
+  const p=oppoContent.querySelector('.description');
+  btn.addEventListener('click',()=>p.classList.toggle('show')); 
 }
 dockButtons.forEach(btn=>{
   btn.addEventListener('click',()=>openWindow(document.getElementById(btn.dataset.target)));

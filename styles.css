@@ -53,10 +53,13 @@ body.dark .window{background:var(--glass-dark);}
 .window.open{opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1);}
 .window .close{position:absolute; top:.5rem; right:.5rem; border:none; background:none; color:inherit; font-size:1.2rem; cursor:pointer;}
 
-#oppo-content{text-align:center;}
-#oppo-content .device-emoji{font-size:4rem; margin-bottom:.5rem;}
-#oppo-content h1{margin:.3rem 0;}
-#oppo-content p{margin:0; font-weight:bold;}
+#oppo-content{display:flex;flex-direction:column;align-items:center;text-align:center;}
+.svg-device{width:80%;max-width:200px;height:auto;margin:auto;color:currentColor;}
+#oppo-content h1{margin:.5rem 0;}
+.discover-btn{margin-top:.5rem;padding:.4rem 1rem;border:none;border-radius:20px;font-weight:bold;background:var(--accent);color:#fff;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.discover-btn:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.description{display:none;margin-top:.5rem;font-size:.9rem;}
+.description.show{display:block;}
 
 .gallery{display:flex; flex-wrap:wrap; gap:.5rem;}
 .gallery img{width:calc(33% - .5rem); border-radius:10px; object-fit:cover;}
