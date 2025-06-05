@@ -16,8 +16,15 @@
         <button class="dock-item" data-target="photos-window">📷</button>
         <button class="dock-item" data-target="notes-window">📝</button>
         <button class="dock-item" data-target="settings-window">⚙️</button>
-        <button id="rodrigue-call" class="dock-item" title="📞 Rodrigue Appelle">📞</button>
-        <button id="bardella-call" class="dock-item" title="📞 Bardella Appelle">📞</button>
+        <button class="dock-item call-btn" data-name="Rodrigue" data-sound="cat-iphone-ringtone" data-img="img/contacts/rodrigue.svg" title="📞 Rodrigue">
+            <img src="img/contacts/rodrigue.svg" alt="Rodrigue">
+        </button>
+        <button class="dock-item call-btn" data-name="Nouhaila" data-sound="notif" data-img="img/contacts/nouhaila.svg" title="📞 Nouhaila">
+            <img src="img/contacts/nouhaila.svg" alt="Nouhaila">
+        </button>
+        <button class="dock-item call-btn" data-name="Bardella" data-sound="buzzer-error" data-img="img/contacts/bardella.svg" title="📞 Bardella">
+            <img src="img/contacts/bardella.svg" alt="Bardella">
+        </button>
         <button id="troll-button" class="dock-item" title="Troll">🤠</button>
         <button class="dock-item" data-target="oppo-window" title="Oppo Store">🛍️</button>
     </div>
@@ -111,21 +118,11 @@
 
     <div id="call-overlay" class="call-overlay">
         <div class="call-card ringing">
-            <p id="call-title">Rodrigue Appelle...</p>
+            <img id="call-photo" class="call-photo" alt="contact">
+            <p id="call-title">Appel…</p>
             <div class="actions">
                 <button id="call-answer" class="answer">Répondre</button>
                 <button id="call-decline" class="decline">Refuser</button>
-            </div>
-            <p id="call-message" class="call-message"></p>
-        </div>
-    </div>
-
-    <div id="bardella-overlay" class="call-overlay">
-        <div class="call-card vibrate">
-            <p class="call-title"><span class="phone-icon">📞</span>Bardella Appelle 🫠</p>
-            <div class="actions">
-                <button class="answer">Répondre</button>
-                <button class="decline">Refuser</button>
             </div>
         </div>
     </div>
