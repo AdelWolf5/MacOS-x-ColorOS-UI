@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="wallpaper"></div>
+<header style="text-align:center; padding:1rem;">
+    <button id="theme-toggle">Thème</button>
+    <input id="book-search" type="text" placeholder="Rechercher un livre" style="margin-left:1rem;">
+</header>
+<main class="library">
+    <article class="book-card" data-title="La guerre des marques">
+        <img src="img/books/brand-war.svg" alt="La guerre des marques">
+        <h3>La guerre des marques</h3>
+    </article>
+    <article class="book-card" data-title="Amour des marques">
+        <img src="img/books/brand-love.svg" alt="Amour des marques">
+        <h3>Amour des marques</h3>
+    </article>
+    <article class="book-card" data-title="Samsung x Apple">
+        <img src="img/books/samsung-apple.svg" alt="Samsung x Apple">
+        <h3>Samsung x Apple</h3>
+    </article>
+    <article class="book-card" data-title="Les marques méchantes">
+        <img src="img/books/evil-brands.svg" alt="Les marques méchantes">
+        <h3>Les marques méchantes</h3>
+    </article>
+</main>
+<div id="book-overlay" class="book-overlay">
+    <div class="book-content">
+        <button class="close">✖</button>
+        <h2 id="book-title"></h2>
+        <ol id="chapter-list"></ol>
+    </div>
+</div>
+<script>
+const toggleBtn=document.getElementById('theme-toggle');
+if(localStorage.theme==='dark') document.body.classList.add('dark');
+toggleBtn.addEventListener('click',()=>{
+    document.body.classList.toggle('dark');
+    localStorage.theme=document.body.classList.contains('dark')?'dark':'light';
+});
+const cards=document.querySelectorAll('.book-card');
+const overlay=document.getElementById('book-overlay');
+const titleEl=document.getElementById('book-title');
+const listEl=document.getElementById('chapter-list');
+const chapters={
+    'La guerre des marques':['Chapitre 1','Chapitre 2','Chapitre 3'],
+    'Amour des marques':['Début','Rencontre','Fin'],
+    'Samsung x Apple':['Episode 1','Episode 2','Episode 3'],
+    'Les marques méchantes':['Prologue','Révélations','Épilogue']
+};
+cards.forEach(c=>c.addEventListener('click',()=>{
+    const t=c.dataset.title;
+    titleEl.textContent=t;
+    listEl.innerHTML='';
+    (chapters[t]||[]).forEach(ch=>{
+        const li=document.createElement('li');li.textContent=ch;listEl.appendChild(li);
+    });
+    overlay.classList.add('show');
+}));
+overlay.querySelector('.close').onclick=()=>overlay.classList.remove('show');
+const search=document.getElementById('book-search');
+search.addEventListener('input',()=>{
+    const q=search.value.toLowerCase();
+    cards.forEach(c=>c.style.display=c.dataset.title.toLowerCase().includes(q)?'':'none');
+});
+</script>
+</body>
+</html>
